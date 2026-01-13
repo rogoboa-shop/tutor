@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .body { font-family: 'Segoe UI', Helvetica, Arial, sans-serif; background-color: #f9fafb; margin: 0; padding: 0; }
+        .container { max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e5e7eb; }
+        .header { background-color: #0f172a; padding: 30px; text-align: center; }
+        .content { padding: 40px; color: #374151; line-height: 1.6; }
+        .otp-box { background-color: #f3f4f6; border-radius: 8px; padding: 20px; text-align: center; margin: 25px 0; border: 1px dashed #2563eb; }
+        .otp-code { font-size: 32px; font-weight: bold; letter-spacing: 8px; color: #2563eb; margin: 0; }
+        .footer { background-color: #f9fafb; padding: 20px; text-align: center; font-size: 12px; color: #6b7280; }
+        .btn { background-color: #2563eb; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block; }
+    </style>
+</head>
+<body class="body">
+<div class="container">
+    <div class="header">
+        <h1 style="color: #3b82f6; margin: 0; letter-spacing: -1px;">ROGOBOA</h1>
+    </div>
+    <div class="content">
+        <h2 style="color: #111827;">Verify your email</h2>
+        <p>Hi <span th:text="${name}">Student</span>,</p>
+        <p>Thank you for choosing ROGOBOA Tutoring. To complete your registration and start your journey toward better results, please use the verification code below:</p>
+
+        <div class="otp-box">
+            <p style="margin-top: 0; font-size: 14px; color: #6b7280;">Your Verification Code</p>
+            <h1 class="otp-code" th:text="${otp}">123456</h1>
+        </div>
+
+        <p style="font-size: 14px; color: #ef4444;">
+            This code will expire in <span th:text="${expiryMinutes}">10</span> minutes.
+        </p>
+        <p>If you didn't request this, you can safely ignore this email.</p>
+    </div>
+    <div class="footer">
+        <p>© 2026 ROGOBOA Tutoring. We sell results, not hours.</p>
+    </div>
+</div>
+</body>
+</html>

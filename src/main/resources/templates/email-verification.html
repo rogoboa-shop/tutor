@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"></head>
+<body style="font-family: sans-serif; padding: 20px; color: #444;">
+<div style="max-width: 600px; margin: auto; border: 1px solid #ddd; padding: 30px; border-radius: 10px;">
+  <h2 style="color: #2563eb;">Verify Your Account</h2>
+  <p>Hi <span th:text="${name}">User</span>,</p>
+  <p>Please click the button below to verify your email address and activate your account:</p>
+  <div style="text-align: center; margin: 30px 0;">
+    <a th:href="${verificationLink}"
+       style="background: #2563eb; color: white; padding: 15px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+      Confirm My Email
+    </a>
+  </div>
+  <p style="font-size: 12px; color: #888;">If you're having trouble, copy this link into your browser: <br/>
+    <span th:text="${verificationLink}">link</span>
+  </p>
+</div>
+</body>
+</html>

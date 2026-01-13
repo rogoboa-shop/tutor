@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: 'Helvetica', Arial, sans-serif; color: #333; line-height: 1.6; }
+        .email-container { max-width: 600px; margin: auto; border: 1px solid #eee; border-radius: 10px; overflow: hidden; }
+        .hero { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); color: white; padding: 50px 30px; text-align: center; }
+        .body-content { padding: 30px; }
+        .cta-button { display: inline-block; padding: 15px 30px; background-color: #2563eb; color: #ffffff !important; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 20px; }
+        .feature-list { list-style: none; padding: 0; }
+        .feature-item { margin-bottom: 15px; padding-left: 25px; position: relative; }
+        .feature-item::before { content: '✓'; position: absolute; left: 0; color: #2563eb; font-weight: bold; }
+    </style>
+</head>
+<body>
+<div class="email-container">
+    <div class="hero">
+        <h1 style="margin: 0; font-size: 32px;">Welcome to ROGOBOA</h1>
+        <p style="font-style: italic; opacity: 0.8;">"Results-based tutoring for high achievers."</p>
+    </div>
+    <div class="body-content">
+        <p>Hi <span th:text="${name}">Learner</span>,</p>
+        <p>You’re officially part of a tutoring community that prioritizes <strong>improvement over hours</strong>. We are excited to help you hit your target marks in Maths and Physics.</p>
+
+        <h3>What happens now?</h3>
+        <div class="feature-list">
+            <div class="feature-item"><strong>Diagnostic Lesson:</strong> We'll find your specific knowledge gaps.</div>
+            <div class="feature-item"><strong>Custom Roadmap:</strong> A plan built specifically for your assessment schedule.</div>
+            <div class="feature-item"><strong>Accountability:</strong> Weekly targets to ensure you never fall behind.</div>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="https://rogoboa.co.za/trial" class="cta-button">Book Your Free Trial</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
