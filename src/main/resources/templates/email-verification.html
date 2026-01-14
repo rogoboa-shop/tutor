@@ -1,20 +1,67 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><meta charset="UTF-8"></head>
-<body style="font-family: sans-serif; padding: 20px; color: #444;">
-<div style="max-width: 600px; margin: auto; border: 1px solid #ddd; padding: 30px; border-radius: 10px;">
-  <h2 style="color: #2563eb;">Verify Your Account</h2>
-  <p>Hi <span th:text="${name}">User</span>,</p>
-  <p>Please click the button below to verify your email address and activate your account:</p>
-  <div style="text-align: center; margin: 30px 0;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="font-family: 'Georgia', serif; padding: 20px; color: #111827; background-color: #f9fafb; line-height: 1.6;">
+<div style="max-width: 600px; margin: auto; background-color: #ffffff; border-top: 6px solid #111827; border-bottom: 2px solid #e5e7eb; padding: 40px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+
+  <div style="text-align: center; margin-bottom: 30px;">
+    <div style="display: inline-block; background-color: #111827; color: #ffffff; padding: 10px 15px; font-weight: bold; font-size: 20px; letter-spacing: -0.05em; margin-bottom: 10px;">
+      R
+    </div>
+    <div style="font-family: 'Georgia', serif; font-size: 24px; font-weight: bold; letter-spacing: -0.02em; color: #111827; text-transform: uppercase;">
+      ROGOBOA
+    </div>
+    <div style="font-family: sans-serif; font-size: 9px; font-weight: bold; letter-spacing: 0.3em; color: #2563eb; margin-top: 5px; text-transform: uppercase;">
+      Academic Portal 2026
+    </div>
+  </div>
+
+  <hr style="border: 0; border-top: 1px solid #e5e7eb; margin-bottom: 30px;" />
+
+  <h2 style="font-family: 'Georgia', serif; font-size: 28px; color: #111827; margin-bottom: 20px; text-align: center;">
+    Identify Verification
+  </h2>
+
+  <p style="font-size: 16px; margin-bottom: 20px;">
+    Dear <strong th:text="${name}">User</strong>,
+  </p>
+
+  <p style="font-size: 16px; margin-bottom: 30px; text-align: justify; color: #374151; font-style: italic;">
+    To establish your account within the ROGOBOA Maths and Physics roadmap, we require a formal verification of this email address. This ensures the security of your academic progress and billing information.
+  </p>
+
+  <div style="text-align: center; margin: 40px 0;">
     <a th:href="${verificationLink}"
-       style="background: #2563eb; color: white; padding: 15px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">
-      Confirm My Email
+       style="display: inline-block; background-color: #2563eb; color: #ffffff; padding: 18px 35px; text-decoration: none; font-family: sans-serif; font-size: 14px; font-weight: bold; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 0px; box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.2);">
+      Verify Credentials
     </a>
   </div>
-  <p style="font-size: 12px; color: #888;">If you're having trouble, copy this link into your browser: <br/>
-    <span th:text="${verificationLink}">link</span>
+
+  <div style="padding: 20px; background-color: #f9fafb; border-left: 4px solid #2563eb; margin-bottom: 30px;">
+    <p style="font-size: 13px; color: #4b5563; margin: 0;">
+      <strong>Security Note:</strong> If you did not initiate this registration for the 2026 academic cycle, please disregard this correspondence.
+    </p>
+  </div>
+
+  <p style="font-family: sans-serif; font-size: 11px; color: #9ca3af; text-align: center; line-height: 1.8;">
+    If the button above does not function, please copy and paste the following URL into your browser:<br/>
+    <span style="color: #2563eb; word-break: break-all;" th:text="${verificationLink}">link</span>
   </p>
+
+  <hr style="border: 0; border-top: 1px solid #e5e7eb; margin: 30px 0;" />
+
+  <div style="text-align: center;">
+    <p style="font-family: sans-serif; font-size: 10px; font-weight: bold; color: #9ca3af; letter-spacing: 0.2em; text-transform: uppercase; margin: 0;">
+      ROGOBOA Tutoring &bull; 063 848 7596
+    </p>
+    <p style="font-family: sans-serif; font-size: 10px; color: #9ca3af; margin-top: 5px;">
+      Maths & Physics Results-Based Specialists
+    </p>
+  </div>
+
 </div>
 </body>
 </html>
