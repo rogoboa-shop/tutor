@@ -1,6 +1,7 @@
 package com.rogoboa.tutor.usermanagement.services;
 
 import com.rogoboa.tutor.integrationservices.email.EmailService;
+import com.rogoboa.tutor.integrationservices.exceptions.UserAlreadyExistsException;
 import com.rogoboa.tutor.security.JwtAuthenticationException;
 import com.rogoboa.tutor.security.JwtService;
 import com.rogoboa.tutor.security.otp.OTPCacheService;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -51,9 +53,9 @@ public class AuthService {
 
     @Transactional
     public UserResponse register(RegisterRequest request) {
+
         if (userRepository.existsByEmail(request.email())) {
-            // This message is what will be caught by the controller above
-            throw new RuntimeException("An account with this email already exists.");
+            throw new UserAlreadyExistsException("An account with this email already exists.");
         }
 
         // Generate OTP for email verification
@@ -93,8 +95,10 @@ public class AuthService {
 
     @Transactional
     public AuthResponse login(AuthRequest request) {
+        // Catch the specific "User Not Found" and rethrow as "Bad Credentials"
+        // to prevent user enumeration.
         User user = userRepository.findByEmail(request.email())
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(() -> new BadCredentialsException("Invalid email or password"));
 
         if (!user.isEmailVerified()) {
             throw new DisabledException("Email not verified. Please verify your email.");
@@ -104,7 +108,7 @@ public class AuthService {
             throw new DisabledException("Account is disabled");
         }
 
-        // Authenticate credentials
+        // This will throw BadCredentialsException if the password is wrong
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.email(), request.password())
         );

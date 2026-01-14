@@ -32,15 +32,10 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<UserResponse>> register(@Valid @RequestBody RegisterRequest request) {
-        try {
-            UserResponse user = authService.register(request);
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(new ApiResponse<>(true, "Registration successful. Please check your email to verify your account.", user));
-        } catch (RuntimeException e) {
-            // Return a clean error message instead of crashing
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new ApiResponse<>(false, e.getMessage(), null));
-        }
+        // No try-catch needed! Let the Global Handler handle the errors.
+        UserResponse user = authService.register(request);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new ApiResponse<>(true, "Registration successful. Please check your email.", user));
     }
 
     @PostMapping("/resend-verification")
