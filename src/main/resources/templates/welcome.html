@@ -2,38 +2,80 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <style>
-        body { font-family: 'Helvetica', Arial, sans-serif; color: #333; line-height: 1.6; }
-        .email-container { max-width: 600px; margin: auto; border: 1px solid #eee; border-radius: 10px; overflow: hidden; }
-        .hero { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); color: white; padding: 50px 30px; text-align: center; }
-        .body-content { padding: 30px; }
-        .cta-button { display: inline-block; padding: 15px 30px; background-color: #2563eb; color: #ffffff !important; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 20px; }
-        .feature-list { list-style: none; padding: 0; }
-        .feature-item { margin-bottom: 15px; padding-left: 25px; position: relative; }
-        .feature-item::before { content: '✓'; position: absolute; left: 0; color: #2563eb; font-weight: bold; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body>
-<div class="email-container">
-    <div class="hero">
-        <h1 style="margin: 0; font-size: 32px;">Welcome to ROGOBOA</h1>
-        <p style="font-style: italic; opacity: 0.8;">"Results-based tutoring for high achievers."</p>
-    </div>
-    <div class="body-content">
-        <p>Hi <span th:text="${name}">Learner</span>,</p>
-        <p>You’re officially part of a tutoring community that prioritizes <strong>improvement over hours</strong>. We are excited to help you hit your target marks in Maths and Physics.</p>
+<body style="font-family: 'Georgia', serif; padding: 20px; color: #111827; background-color: #f9fafb; line-height: 1.6; margin: 0;">
+<div style="max-width: 600px; margin: 20px auto; background-color: #ffffff; border-top: 6px solid #111827; border-bottom: 2px solid #e5e7eb; padding: 40px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
 
-        <h3>What happens now?</h3>
-        <div class="feature-list">
-            <div class="feature-item"><strong>Diagnostic Lesson:</strong> We'll find your specific knowledge gaps.</div>
-            <div class="feature-item"><strong>Custom Roadmap:</strong> A plan built specifically for your assessment schedule.</div>
-            <div class="feature-item"><strong>Accountability:</strong> Weekly targets to ensure you never fall behind.</div>
+    <div style="text-align: center; margin-bottom: 30px;">
+        <div style="display: inline-block; background-color: #111827; color: #ffffff; padding: 10px 15px; font-weight: bold; font-size: 20px; letter-spacing: -0.05em; margin-bottom: 10px;">
+            R
         </div>
-
-        <div style="text-align: center;">
-            <a href="https://rogoboa.co.za/trial" class="cta-button">Book Your Free Trial</a>
+        <div style="font-family: 'Georgia', serif; font-size: 24px; font-weight: bold; letter-spacing: -0.02em; color: #111827; text-transform: uppercase;">
+            ROGOBOA
+        </div>
+        <div style="font-family: sans-serif; font-size: 9px; font-weight: bold; letter-spacing: 0.3em; color: #2563eb; margin-top: 5px; text-transform: uppercase;">
+            Welcome Kit 2026
         </div>
     </div>
+
+    <hr style="border: 0; border-top: 1px solid #e5e7eb; margin-bottom: 30px;" />
+
+    <div style="text-align: center; margin-bottom: 40px;">
+        <h1 style="font-family: 'Georgia', serif; font-size: 32px; color: #111827; margin-bottom: 10px;">The Journey Begins</h1>
+        <p style="font-family: 'Georgia', serif; font-style: italic; color: #4b5563; font-size: 18px;">"Established Excellence through Adaptive Learning."</p>
+    </div>
+
+    <div style="padding: 0 10px;">
+        <p style="font-size: 16px; margin-bottom: 20px;">
+            Dear <strong th:text="${name}">Learner</strong>,
+        </p>
+
+        <p style="font-size: 16px; margin-bottom: 30px; text-align: justify; color: #374151;">
+            You are officially part of a tutoring community that prioritizes <strong>outcomes over hours</strong>. Our methodology is designed for Grade 11 and 12 students who are serious about establishing distinctions in Maths and Physics.
+        </p>
+
+        <h3 style="font-family: sans-serif; font-size: 11px; font-weight: bold; color: #9ca3af; text-transform: uppercase; tracking: 0.2em; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; margin-bottom: 20px;">
+            The ROGOBOA Roadmap
+        </h3>
+
+        <div style="margin-bottom: 25px;">
+            <div style="margin-bottom: 20px; padding-left: 15px; border-left: 3px solid #2563eb;">
+                <p style="margin: 0; font-weight: bold; font-size: 16px;">01. Diagnostic Session</p>
+                <p style="margin: 5px 0 0 0; font-size: 14px; color: #6b7280; font-style: italic;">We identify specific knowledge gaps and calculate your current academic baseline.</p>
+            </div>
+
+            <div style="margin-bottom: 20px; padding-left: 15px; border-left: 3px solid #2563eb;">
+                <p style="margin: 0; font-weight: bold; font-size: 16px;">02. Custom Strategic Plan</p>
+                <p style="margin: 5px 0 0 0; font-size: 14px; color: #6b7280; font-style: italic;">A results-based roadmap built specifically for your assessment schedule.</p>
+            </div>
+
+            <div style="margin-bottom: 20px; padding-left: 15px; border-left: 3px solid #2563eb;">
+                <p style="margin: 0; font-weight: bold; font-size: 16px;">03. Performance Accountability</p>
+                <p style="margin: 5px 0 0 0; font-size: 14px; color: #6b7280; font-style: italic;">Weekly targets and rigorous progress tracking to ensure you stay ahead of the curve.</p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin: 40px 0;">
+            <p style="font-size: 14px; color: #4b5563; margin-bottom: 20px;">Ready to establish your first session?</p>
+            <a href="https://rogoboa.co.za/trial"
+               style="display: inline-block; background-color: #2563eb; color: #ffffff; padding: 18px 35px; text-decoration: none; font-family: sans-serif; font-size: 13px; font-weight: bold; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 0px;">
+                Secure Diagnostic Slot
+            </a>
+        </div>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid #e5e7eb; margin: 30px 0;" />
+
+    <div style="text-align: center;">
+        <p style="font-family: sans-serif; font-size: 10px; font-weight: bold; color: #9ca3af; letter-spacing: 0.2em; text-transform: uppercase; margin: 0;">
+            ROGOBOA Tutoring &bull; 063 848 7596
+        </p>
+        <p style="font-family: sans-serif; font-size: 10px; color: #9ca3af; margin-top: 5px;">
+            Mathematics & Physics &bull; 2026 Academic Year
+        </p>
+    </div>
+
 </div>
 </body>
 </html>

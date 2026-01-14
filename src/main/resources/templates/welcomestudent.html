@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="font-family: 'Georgia', serif; padding: 20px; color: #111827; background-color: #f9fafb; line-height: 1.6; margin: 0;">
+<div style="max-width: 600px; margin: 20px auto; background-color: #ffffff; border-top: 6px solid #111827; border-bottom: 2px solid #e5e7eb; padding: 40px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+
+  <div style="text-align: center; margin-bottom: 30px;">
+    <div style="display: inline-block; background-color: #111827; color: #ffffff; padding: 10px 15px; font-weight: bold; font-size: 20px; letter-spacing: -0.05em; margin-bottom: 10px;">
+      R
+    </div>
+    <div style="font-family: 'Georgia', serif; font-size: 24px; font-weight: bold; letter-spacing: -0.02em; color: #111827; text-transform: uppercase;">
+      ROGOBOA
+    </div>
+    <div style="font-family: sans-serif; font-size: 9px; font-weight: bold; letter-spacing: 0.3em; color: #2563eb; margin-top: 5px; text-transform: uppercase;">
+      Service Activation 2026
+    </div>
+  </div>
+
+  <hr style="border: 0; border-top: 1px solid #e5e7eb; margin-bottom: 30px;" />
+
+  <div style="padding: 0 10px;">
+    <h2 style="font-family: 'Georgia', serif; font-size: 26px; color: #111827; margin-bottom: 20px; text-align: center;">
+      Enrollment Confirmed
+    </h2>
+
+    <p style="font-size: 16px; margin-bottom: 20px;">
+      Dear <strong th:text="${name}">Parent/Learner</strong>,
+    </p>
+
+    <p style="font-size: 15px; margin-bottom: 30px; text-align: justify; color: #374151;">
+      Thank you for establishing your commitment to academic excellence. We have successfully processed your first monthly contribution. Your 2026 Results Roadmap is now active.
+    </p>
+
+    <div style="background-color: #f9fafb; border: 2px solid #e5e7eb; padding: 25px; margin: 30px 0;">
+      <p style="font-family: sans-serif; margin-top: 0; font-size: 10px; font-weight: bold; color: #9ca3af; text-transform: uppercase; tracking: 0.2em; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; margin-bottom: 15px;">
+        Plan Selection Summary
+      </p>
+
+      <table style="width: 100%; border-collapse: collapse; font-family: 'Georgia', serif;">
+        <tr>
+          <td style="padding: 8px 0; font-size: 14px; color: #111827;"><strong>Monthly Base Plan</strong></td>
+          <td style="padding: 8px 0; font-size: 14px; color: #111827; text-align: right;" th:text="'R' + ${baseAmount}">R900</td>
+        </tr>
+        <tr>
+          <td style="padding: 0 0 8px 0; font-size: 12px; color: #6b7280; font-style: italic;" colspan="2">
+            Focus: <span th:text="${subjects}">Mathematics</span>
+          </td>
+        </tr>
+
+        <tr th:if="${hasEmergency}">
+          <td style="padding: 8px 0; font-size: 14px; color: #2563eb; border-top: 1px solid #e5e7eb;"><strong>Emergency Support (24/7)</strong></td>
+          <td style="padding: 8px 0; font-size: 14px; color: #2563eb; text-align: right; border-top: 1px solid #e5e7eb;">R250</td>
+        </tr>
+
+        <tr>
+          <td style="padding: 15px 0 0 0; font-size: 18px; color: #111827; border-top: 2px solid #111827;"><strong>Total Contribution</strong></td>
+          <td style="padding: 15px 0 0 0; font-size: 18px; color: #2563eb; text-align: right; border-top: 2px solid #111827;"><strong th:text="'R' + ${totalAmount}">R1150</strong></td>
+        </tr>
+      </table>
+    </div>
+
+    <div style="margin-bottom: 30px;">
+      <h4 style="font-family: sans-serif; font-size: 11px; font-weight: bold; color: #111827; text-transform: uppercase; tracking: 0.1em; margin-bottom: 15px;">Next Actions:</h4>
+      <ul style="padding-left: 20px; font-size: 14px; color: #374151; margin: 0;">
+        <li style="margin-bottom: 10px;">Your tutor will contact you within 4 hours to finalize your lesson timetable.</li>
+        <li style="margin-bottom: 10px;">Log in to your <strong>Student Command Center</strong> to view your syllabus breakdown.</li>
+        <li>Ensure all prerequisite materials are ready for your first formal session.</li>
+      </ul>
+    </div>
+
+    <div style="text-align: center; margin: 40px 0;">
+      <a href="https://rogoboa.co.za/dashboard"
+         style="display: inline-block; background-color: #111827; color: #ffffff; padding: 18px 35px; text-decoration: none; font-family: sans-serif; font-size: 13px; font-weight: bold; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 0px;">
+        Access My Dashboard
+      </a>
+    </div>
+  </div>
+
+  <hr style="border: 0; border-top: 1px solid #e5e7eb; margin: 30px 0;" />
+
+  <div style="text-align: center;">
+    <p style="font-family: sans-serif; font-size: 10px; font-weight: bold; color: #9ca3af; letter-spacing: 0.2em; text-transform: uppercase; margin: 0;">
+      ROGOBOA Tutoring &bull; 063 848 7596
+    </p>
+    <p style="font-family: sans-serif; font-size: 10px; color: #9ca3af; margin-top: 5px;">
+      "We sell results — not hours."
+    </p>
+  </div>
+
+</div>
+</body>
+</html>
