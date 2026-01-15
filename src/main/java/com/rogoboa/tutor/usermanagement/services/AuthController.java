@@ -150,7 +150,8 @@ public class AuthController {
         // Update access token cookie
         Cookie accessTokenCookie = new Cookie("access_token", authResponse.accessToken());
         accessTokenCookie.setHttpOnly(true);
-        accessTokenCookie.setSecure(true);
+        boolean isProd = "prod".equalsIgnoreCase(env);
+        accessTokenCookie.setSecure(isProd);
         accessTokenCookie.setPath("/");
         accessTokenCookie.setMaxAge(24 * 60 * 60);
 
