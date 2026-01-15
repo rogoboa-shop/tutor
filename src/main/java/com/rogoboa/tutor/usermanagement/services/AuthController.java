@@ -185,6 +185,27 @@ public class AuthController {
         return ResponseEntity.ok(new ApiResponse<>(true, "Account deleted successfully", null));
     }
 
+    @PostMapping("/forgot-password")
+    public ResponseEntity<ApiResponse<Void>> forgotPassword(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        authService.initiatePasswordReset(email);
+        return ResponseEntity.ok(new ApiResponse<>(
+                true,
+                "Password reset code sent to your email",
+                null
+        ));
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<ApiResponse<Void>> resetPassword(@Valid @RequestBody ResetPasswordRequest request) {
+        authService.resetPassword(request.email(), request.otp(), request.newPassword());
+        return ResponseEntity.ok(new ApiResponse<>(
+                true,
+                "Password reset successful. You can now login with your new password.",
+                null
+        ));
+    }
+
     private String extractTokenFromCookie(HttpServletRequest request, String cookieName) {
         if (request.getCookies() != null) {
             return Arrays.stream(request.getCookies())
