@@ -7,6 +7,7 @@ public record UserResponse(
         UUID id,
         String fullName,
         String email,
+        String role,
         String profilePictureUrl,
         boolean emailVerified
 ) {}

@@ -1,7 +1,6 @@
 package com.rogoboa.tutor.usermanagement.services;
 
 import com.rogoboa.tutor.usermanagement.dtos.*;
-import com.rogoboa.tutor.usermanagement.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +8,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @RestController

@@ -95,6 +95,19 @@ public class User implements UserDetails {
         createdAt = LocalDateTime.now();
     }
 
+    // If this user is a PARENT, this list contains their children
+    @ManyToMany
+    @JoinTable(
+            name = "parent_student_links",
+            joinColumns = @JoinColumn(name = "parent_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id")
+    )
+    private List<User> children;
+
+    // If this user is a STUDENT, this list contains their parents
+    @ManyToMany(mappedBy = "children")
+    private List<User> parents;
+
     // --- UserDetails Implementation Methods ---
 
     @Override

@@ -2,7 +2,6 @@ package com.rogoboa.tutor.usermanagement.services;
 
 import com.rogoboa.tutor.integrationservices.email.EmailService;
 import com.rogoboa.tutor.usermanagement.dtos.*;
-import com.rogoboa.tutor.usermanagement.services.AuthService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

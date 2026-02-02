@@ -1,5 +1,7 @@
 package com.rogoboa.tutor.slots;
 
+import com.rogoboa.tutor.SessionType;
+import com.rogoboa.tutor.bookings.Booking;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
@@ -31,4 +33,11 @@ public class AvailabilitySlot {
 
     // Optional: Link to a specific tutor if you have multiple
     private String tutorName;
+
+    @Enumerated(EnumType.STRING)
+    private SessionType sessionType;
+    @ManyToOne
+    @JoinColumn(name = "booking_id")
+    private Booking booking; // Points to the TrialBooking or RegularBooking
+    
 }

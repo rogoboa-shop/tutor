@@ -1,6 +1,5 @@
 package com.rogoboa.tutor.security;
 
-import com.rogoboa.tutor.security.otp.TokenBlacklistService;
 import com.rogoboa.tutor.usermanagement.User;
 import com.rogoboa.tutor.usermanagement.UserRepository;
 import jakarta.servlet.FilterChain;
@@ -8,7 +7,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -47,8 +45,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (StringUtils.hasText(jwt)) {
                 // 1. Check Blacklist via JwtService
                 if (jwtService.isTokenBlacklisted(jwt)) {
-                    log.warn("Attempted to use blacklisted token");
-                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    log.debug("Blacklisted token, skipping authentication");
+                    filterChain.doFilter(request, response);
                     return;
                 }
 
@@ -81,8 +79,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     }
                 }
             }
-        } catch (Exception e) {
-            log.error("Cannot set user authentication: {}", e.getMessage());
+        } catch (io.jsonwebtoken.ExpiredJwtException e) {
+            log.debug("JWT expired, continuing unauthenticated");
+        }
+        catch (io.jsonwebtoken.JwtException e) {
+            log.debug("Invalid JWT, continuing unauthenticated");
+        }
+        catch (Exception e) {
+            log.error("Unexpected authentication error", e);
         }
 
         filterChain.doFilter(request, response);
@@ -108,6 +112,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getRequestURI();
+
+        // Don't skip if it's the /me endpoint
+        if (path.equals("/api/auth/me")) {
+            return false;
+        }
 
         // Public endpoints that don't require authentication
         return path.startsWith("/api/auth/") ||

@@ -88,6 +88,7 @@ public class AuthService {
                 savedUser.getId(),
                 savedUser.getFullName(),
                 savedUser.getEmail(),
+                savedUser.getRole().name(),
                 savedUser.getProfilePictureUrl(),
                 savedUser.isEmailVerified()
         );
@@ -144,6 +145,7 @@ public class AuthService {
                 user.getId(),
                 user.getFullName(),
                 user.getEmail(),
+                user.getRole().name(),
                 user.getProfilePictureUrl(),
                 user.isEmailVerified()
         );
@@ -173,6 +175,7 @@ public class AuthService {
                         savedUser.getId(),
                         savedUser.getFullName(),
                         savedUser.getEmail(),
+                        savedUser.getRole().name(),
                         savedUser.getProfilePictureUrl(),
                         savedUser.isEmailVerified()
                 )
@@ -300,6 +303,7 @@ public class AuthService {
                         user.getId(),
                         user.getFullName(),
                         user.getEmail(),
+                        user.getRole().name(),
                         user.getProfilePictureUrl(),
                         user.isEmailVerified()
                 )

@@ -34,6 +34,7 @@ public class UserService {
                 user.getId(),
                 user.getFullName(),
                 user.getEmail(),
+                user.getRole().name(),
                 user.getProfilePictureUrl(),
                 user.isEmailVerified()
         );
@@ -62,10 +63,12 @@ public class UserService {
 
         User savedUser = userRepository.save(user);
 
-        return new UserResponse(
+        return
+                new UserResponse(
                 savedUser.getId(),
                 savedUser.getFullName(),
                 savedUser.getEmail(),
+                        savedUser.getRole().name(),
                 savedUser.getProfilePictureUrl(),
                 savedUser.isEmailVerified()
         );
