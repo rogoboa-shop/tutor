@@ -15,7 +15,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "bookings")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "booking_class")
+@DiscriminatorColumn(name = "booking_class", discriminatorType = DiscriminatorType.STRING)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -32,6 +32,10 @@ public abstract class Booking {
 
     private String subject;
 
+    // This allows s.booking.bookingClass to work in JPQL
+    @Column(name = "booking_class", insertable = false, updatable = false)
+    private String bookingClass;
+
     @Enumerated(EnumType.STRING)
     private BookingStatus status = BookingStatus.PENDING;
 
@@ -44,4 +48,8 @@ public abstract class Booking {
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
     }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tutor_id", nullable = false)
+    private User tutor;
 }

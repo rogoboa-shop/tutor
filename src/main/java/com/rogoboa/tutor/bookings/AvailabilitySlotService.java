@@ -5,6 +5,8 @@ import com.rogoboa.tutor.bookings.dtos.SlotResponse;
 import com.rogoboa.tutor.bookings.dtos.UpdateSlotRequest;
 import com.rogoboa.tutor.slots.AvailabilitySlot;
 import com.rogoboa.tutor.slots.AvailabilitySlotRepository;
+import com.rogoboa.tutor.usermanagement.User;
+import com.rogoboa.tutor.usermanagement.UserRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,15 +21,20 @@ import java.util.stream.Collectors;
 public class AvailabilitySlotService {
 
     private final AvailabilitySlotRepository slotRepository;
+    private final UserRepository userRepository;
 
     @Transactional
-    public SlotResponse createSlot(@Valid CreateSlotRequest request) {
+    public SlotResponse createSlot(@Valid CreateSlotRequest request, UUID tutorId) {
+        User tutor = userRepository.findById(tutorId)
+                .orElseThrow(() -> new RuntimeException("Tutor not found"));
+
         AvailabilitySlot slot = AvailabilitySlot.builder()
                 .subject(request.getSubject())
                 .grade(request.getGrade())
                 .startTime(request.getStartTime())
                 .endTime(request.getEndTime())
                 .tutorName(request.getTutorName())
+                .tutor(tutor)
                 .sessionType(request.getSessionType())
                 .isBooked(false)
                 .build();
@@ -37,13 +44,17 @@ public class AvailabilitySlotService {
     }
 
     @Transactional
-    public List<SlotResponse> createBulkSlots(List<CreateSlotRequest> requests) {
+    public List<SlotResponse> createBulkSlots(List<CreateSlotRequest> requests, UUID tutorId) {
+        User tutor = userRepository.findById(tutorId)
+                .orElseThrow(() -> new RuntimeException("Tutor not found"));
+
         List<AvailabilitySlot> slots = requests.stream()
                 .map(request -> AvailabilitySlot.builder()
                         .subject(request.getSubject())
                         .grade(request.getGrade())
                         .startTime(request.getStartTime())
                         .endTime(request.getEndTime())
+                        .tutor(tutor)
                         .tutorName(request.getTutorName())
                         .sessionType(request.getSessionType())
                         .isBooked(false)

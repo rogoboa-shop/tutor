@@ -5,6 +5,11 @@ import com.rogoboa.tutor.bookings.regular.dtos.CreateRegularBookingRequest;
 import com.rogoboa.tutor.bookings.trial.dtos.CreateTrialBookingRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -26,13 +32,19 @@ public class BookingController {
 
     @PostMapping("/student/trial")
     @PreAuthorize("hasAnyRole('STUDENT', 'ADMIN')")
-    public ResponseEntity<BookingResponse> createTrialBooking(
+    public ResponseEntity<?> createTrialBooking(
             @AuthenticationPrincipal UserDetails userDetails,
             @Valid @RequestBody CreateTrialBookingRequest request) {
 
-        UUID userId = getUserIdFromPrincipal(userDetails);
-        BookingResponse response = bookingService.createTrialBooking(userId, request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        try {
+            UUID userId = getUserIdFromPrincipal(userDetails);
+            BookingResponse response = bookingService.createTrialBooking(userId, request);
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } catch (IllegalStateException e) {
+            // Return 400 with the specific validation message
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("message", e.getMessage()));
+        }
     }
 
     @PostMapping("/student/regular")
@@ -57,11 +69,12 @@ public class BookingController {
 
     @GetMapping("/student/my-bookings")
     @PreAuthorize("hasAnyRole('STUDENT', 'TUTOR', 'ADMIN')")
-    public ResponseEntity<List<BookingResponse>> getMyBookings(
-            @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<Page<BookingResponse>> getMyBookings(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @PageableDefault(size = 5, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
 
         UUID userId = getUserIdFromPrincipal(userDetails);
-        List<BookingResponse> bookings = bookingService.getUserBookings(userId);
+        Page<BookingResponse> bookings = bookingService.getUserBookings(userId, pageable);
         return ResponseEntity.ok(bookings);
     }
 

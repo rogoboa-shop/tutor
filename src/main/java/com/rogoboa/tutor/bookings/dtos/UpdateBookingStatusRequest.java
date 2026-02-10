@@ -9,5 +9,5 @@ import java.util.UUID;
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class UpdateBookingStatusRequest {
     private BookingStatus status;
-    private List<UUID> confirmedSlotIds; // For admin confirming slots
+    private List<UUID> confirmedSlotIds;
 }

@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 public class RegularBooking extends Booking {
 
-    private String subscriptionId;
+    //private String subscriptionId;
     private boolean isPaid;
     private Integer lessonNumberInSeries; // e.g., Lesson 4 of 10
 }

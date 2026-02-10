@@ -13,6 +13,8 @@ import com.rogoboa.tutor.usermanagement.User;
 import com.rogoboa.tutor.usermanagement.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -37,12 +39,40 @@ public class BookingService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
+        // NEW: Validation Logic For Number of user bookings
+        List<BookingStatus> restrictedStatuses = List.of(
+                BookingStatus.PENDING,
+                BookingStatus.CONFIRMED,
+                BookingStatus.COMPLETED
+        );
+
+        long activeCount = bookingRepository.countByUserIdAndSubjectAndStatusIn(
+                userId,
+                request.getSubject(),
+                restrictedStatuses
+        );
+
+        if (activeCount >= 2) {
+            throw new IllegalStateException(
+                    "You have already reached the limit of 2 trial sessions for " + request.getSubject() + "."
+            );
+        }
+
         TrialBooking booking = new TrialBooking();
         booking.setUser(user);
         booking.setSubject(request.getSubject());
         booking.setTopicOfInterest(request.getTopicOfInterest());
         booking.setCustomRequest(request.getCustomRequest());
         booking.setStatus(BookingStatus.PENDING);
+
+        // NEW: Link to the Tutor from the first preferred slot
+        if (request.getPreferredSlotIds() != null && !request.getPreferredSlotIds().isEmpty()) {
+            UUID firstSlotId = request.getPreferredSlotIds().get(0);
+            AvailabilitySlot firstSlot = slotRepository.findById(firstSlotId)
+                    .orElseThrow(() -> new RuntimeException("Slot not found: " + firstSlotId));
+
+            booking.setTutor(firstSlot.getTutor()); // Assigning the tutor
+        }
 
         // 1. SAVE THE BOOKING FIRST WITHOUT THE COLLECTION
         // This ensures the booking ID exists in the DB
@@ -85,10 +115,13 @@ public class BookingService {
             }
         }
 
+        // Logic: All selected slots should belong to the same tutor
+        User tutor = slots.get(0).getTutor();
+
         RegularBooking booking = new RegularBooking();
         booking.setUser(user);
+        booking.setTutor(tutor);
         booking.setSubject(request.getSubject());
-        booking.setSubscriptionId(request.getSubscriptionId());
         booking.setStatus(BookingStatus.CONFIRMED);
 
         RegularBooking saved = bookingRepository.save(booking);
@@ -111,10 +144,17 @@ public class BookingService {
                 .collect(Collectors.toList());
     }
 
-    public List<BookingResponse> getUserBookings(UUID userId) {
+    /*public List<BookingResponse> getUserBookings(UUID userId) {
         return bookingRepository.findByUserId(userId).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
+    }*/
+
+    public Page<BookingResponse> getUserBookings(UUID userId, Pageable pageable) {
+        Page<Booking> bookingPage = bookingRepository.findByUserId(userId, pageable);
+
+        // Map the Page of entities to a Page of DTOs
+        return bookingPage.map(this::mapToResponse);
     }
 
     public BookingResponse getBookingById(UUID bookingId) {
@@ -238,7 +278,7 @@ public class BookingService {
 
     // ============= HELPER METHODS =============
 
-    private BookingResponse mapToResponse(Booking booking) {
+    BookingResponse mapToResponse(Booking booking) {
         BookingResponse.BookingResponseBuilder builder = BookingResponse.builder()
                 .id(booking.getId())
                 .userId(booking.getUser().getId())
@@ -260,7 +300,6 @@ public class BookingService {
                     .customRequest(trial.getCustomRequest());
         } else if (booking instanceof RegularBooking regular) {
             builder.bookingType("REGULAR")
-                    .subscriptionId(regular.getSubscriptionId())
                     .isPaid(regular.isPaid())
                     .lessonNumberInSeries(regular.getLessonNumberInSeries());
         }

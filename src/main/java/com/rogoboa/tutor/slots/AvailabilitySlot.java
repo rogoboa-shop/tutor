@@ -2,6 +2,7 @@ package com.rogoboa.tutor.slots;
 
 import com.rogoboa.tutor.SessionType;
 import com.rogoboa.tutor.bookings.Booking;
+import com.rogoboa.tutor.usermanagement.User;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
@@ -36,6 +37,12 @@ public class AvailabilitySlot {
 
     @Enumerated(EnumType.STRING)
     private SessionType sessionType;
+
+    // User that created the slot
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tutor_id")
+    private User tutor;  // or UserTutor if that's your entity name
+    
     @ManyToOne
     @JoinColumn(name = "booking_id")
     private Booking booking; // Points to the TrialBooking or RegularBooking

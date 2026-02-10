@@ -3,11 +3,14 @@ package com.rogoboa.tutor.bookings;
 import com.rogoboa.tutor.bookings.dtos.CreateSlotRequest;
 import com.rogoboa.tutor.bookings.dtos.SlotResponse;
 import com.rogoboa.tutor.bookings.dtos.UpdateSlotRequest;
+import com.rogoboa.tutor.usermanagement.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,18 +25,29 @@ public class AvailabilitySlotController {
 
     @PostMapping
     @PreAuthorize("hasAnyRole('TUTOR', 'ADMIN')")
-    public ResponseEntity<SlotResponse> createSlot(@Valid @RequestBody CreateSlotRequest request) {
-        SlotResponse response = slotService.createSlot(request);
+    public ResponseEntity<SlotResponse> createSlot(
+            @Valid @RequestBody CreateSlotRequest request,
+            @AuthenticationPrincipal User user
+    ) {
+        UUID tutorId = user.getId();
+
+        SlotResponse response = slotService.createSlot(request, tutorId);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
 
     @PostMapping("/bulk")
     @PreAuthorize("hasAnyRole('TUTOR', 'ADMIN')")
     public ResponseEntity<List<SlotResponse>> createBulkSlots(
-            @Valid @RequestBody List<CreateSlotRequest> requests) {
-        List<SlotResponse> responses = slotService.createBulkSlots(requests);
+            @Valid @RequestBody List<CreateSlotRequest> requests,
+            @AuthenticationPrincipal User user
+    ) {
+        UUID tutorId = user.getId();
+
+        List<SlotResponse> responses = slotService.createBulkSlots(requests, tutorId);
         return ResponseEntity.status(HttpStatus.CREATED).body(responses);
     }
+
 
     @GetMapping
     public ResponseEntity<List<SlotResponse>> getAllSlots() {
